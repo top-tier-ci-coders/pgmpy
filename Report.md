@@ -1,7 +1,7 @@
 # Report for assignment 4
 
-This is a report for assignment 4. We had problems finding a good open source project to work on, and spent lots of time trying several different ones. Because of this we also choose to include the projects we did not proceed with due to either unclear issues or code was too hard to make sense of since this was a part of the whole experience. 
-## Project 1, the initial choice
+This is a report for assignement 4. We had problems finding a good open source project to work on, and spent lots of time trying several different ones. Because of this we also choose to include the projects we did not proceed with due to either unclear issues or code was too hard to make sense of since this was a part of the whole experience. 
+## Project 1, initial choice
 
 Name: Apache Geode
 
@@ -31,17 +31,17 @@ Did it build as documented?
 
 **1. How easily can you build the project? Briefly describe if everything worked as documented or not:**
 
-The Geode README file contains two chapters relevant for this question: **Building** and **Testing**. Both chapters forward you to their respective **.MD** file. For building they offer two options depending on the environment you wish to use. Either building from source using gradle or using IntelliJ. We opted for building from source. This was as simple as running
+The Geode README file contains two chapters relevant for this question: **Building** and **Testing**. Both chapters forwards you to their respective **.MD** file. For building they offer two options depending on the environment you wish to use. Either building from source using gradle or using IntelliJ. We opted for building from source. This was as simple as runnig
 
 ```./gradlew build```
 
-**For everyone in our group it builds immediately without failures after approximately 18 minutes.**
+**For everyone in our group it build immediately without failures after approximately 18 minutes.**
 
-Our issue is connected to the **geode-core** module so perhaps a ```./gradlew geode-core:build``` would suffice if the build is too long, but we do not know if the source code of the different modules are connected or not so a full build is worth the extra wait. _*This was not documented*_.
+Our issue is connected to the **geode-core** module so perhaps a ```./gradlew geode-core:build``` would suffice, if the build is too long, but we do not know if the source code of the different modules are connected or not so a full build is worth the extra wait. _*This was not documented*_.
 
 **2. Did you have to install a lot of additional tools to build the software? Were those tools well documented?**
 
-If you wish to use IntelliJ then yes, but there's a whole chapter for that in the **Building** chapter. Otherwise, the only thing needed was JDK 1.8.  
+If you wish to use IntelliJ then yes, but there's a whole chapter for that in the **Building** chapter. Otherwise the only thing needed was JDK 1.8 .  
 
 **3. Were other components installed automatically by the build script?**
 
@@ -76,7 +76,7 @@ URL: https://issues.apache.org/jira/browse/IGNITE-11069
 
 We should extract common logic from mvccSet(), mvccRemove() and mvccLock() methods and corresponding MVCC listeners: MvccUpdateLockListener, MvccRemoveLockListener and MvccAcquireLockListener. *_(Copied from Issue description)_*
 
-Source file connected to the issue: https://github.com/apache/ignite/blob/master/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/.java
+Source file conneted to the issue: https://github.com/apache/ignite/blob/master/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/.java
 
 ## Onboarding experience
 
@@ -84,7 +84,7 @@ Did it build as documented?
 
 **1. How easily can you build the project? Briefly describe if everything worked as documented or not:**
 
-The project builds easily by typing ```mvn clean install -DskipTests -pl modules/core -am```. This took about 2 minutes. 
+The project build easily by typing ```mvn clean install -DskipTests -pl modules/core -am```. This took about 2 minutes. 
 
 
 **2. Did you have to install a lot of additional tools to build the software? Were those tools well documented?**
@@ -94,19 +94,19 @@ No, nothing but maven is required for this project.
 
 **3. Were other components installed automatically by the build script?**
 
-Yes, every dependency was automatically built by maven when executing the command in **1.**
+Yes, every dependency was automatically build by maven when executing the command in **1.**
 
 **4. Did the build conclude automatically without errors?**
 
-Yes, it did, it just took around 2 minutes. 
+Yes it did, it just took around 2 minutes. 
 
 **5. How well do examples and tests run on your system(s)?**
 
-This is where the problems start. The tests are too long causing the system to be slow, and the tests never terminate. We ran ```mvn test``` for 1½ hours and still, it was running. This is not going to be viable as soon as we make changes and wanna run the tests. We looked further into the documentation, namely the **DEVNOTES.txt** file to see more information. It mentions that running ```mvn test -U -Plgpl,examples,-clean-libs,-release -Dmaven.test.failure.ignore=true -DfailIfNoTests=false -Dtest='org.apache.ignite.testsuites.IgniteBasicTestSuite'``` , which lets you decide to run a specific test suite instead of everything. However, this never seems to terminate either. 
+This is where the problems starts. The tests are too long causing the system to be slow, and the tests never terminates. We ran ```mvn test``` for 1½ hours and still it was running. This is not going to be viable as soon as we make changes and wanna run the tests. We looked further into the documentation, namely the **DEVNOTES.txt** file to see more information. It mentions that running ```mvn test -U -Plgpl,examples,-clean-libs,-release -Dmaven.test.failure.ignore=true -DfailIfNoTests=false -Dtest='org.apache.ignite.testsuites.IgniteBasicTestSuite'``` , which let's you decide to run a specific testsuite instead of everything. However this never seems to terminate either. 
 
 Step into ```cd modules/core``` before executing the individual tets.
 
-In order to reduce run-time of the tests we looked up which test files contain the GridCacheMapEntry class that we should refactor. These are however still slow and not all tests succeed. The files and comments are provided below.
+In order to reduce run time on test we looked up which testfiles contain the GridCacheMapEntry class that we should refactor. These are however  still slow and not all tests succeed. The files and comments are provided below.
 
 To run specific tests use: ```mvn test -Dtest=<testfileName> -DfailIfNoTests=false```
 
@@ -120,12 +120,12 @@ Tests that the class appears in:
 * IgnitePartitionedWueueNoBackupTest
 * igniteTxStoreExceptionAbstractSelfTest
 
-Turns out that GridCacheMapEntry.java is an abstract class. Which means and that these test files aren't "proper" test files. And we cannot test an abstract class. The next step was to find classes that extend from this abstract one and find their test code instead. See the next section.
+Turns out that GridCacheMapEntry.java is an abstract class. Which means and that these test files aren't "proper" testfiles. And we cannot test an abstract class. The next step was to find classes that extends from this abstract one and find their test code instead. See next section.
 
 
 #### Project files
 GridCacheMapEntry.java is an abstract class.
-We can not test an abstract class and must, therefore, test the classes that extend this class.
+We can not test a abstract class and must therefore test the classes that extends this class.
 
 * GridLocalCacheEntry extends GridCacheMapEntry
 * GridDistributedCacheEntry extends GridCacheMapEntry
@@ -206,14 +206,14 @@ The dependencies below are required. As we all have python installed, the latter
     Pandas 0.18.1
 
 **4. Did the build conclude automatically without errors?**
-The only error that occurred was due to user permissions when installing with pip. We had to add the --user command in order to fix this, otherwise no functional errors. 
+The only error that occured was due to user permissions when installing with pip. We had to add the --user command in order to fix this, otherwise no functional errors. 
 
 **5. How well do examples and tests run on your system(s)?**
-We had to create a virtual environment for every test to successfully run as some required Python 3 and we ran Python 2.7, this was done using the following command: 
+We had to create a virtual environment for every test to succesfully run as some required Python 3 and we ran Python 2.7, this was done using the following command: 
 
 ``` 
 cd pgmpy
-python3 -m venv env 
+python3 -mvenv env 
 source env/bin/activate
 ``` 
 
@@ -239,14 +239,14 @@ https://github.com/pgmpy/pgmpy/blob/c5ba23a8f7891c0f32df56b24fa2dc5fc0ddbc85/pgm
 https://github.com/pgmpy/pgmpy/blob/29955e759b766edddbd88cce8a70fe1c326c7497/pgmpy/base/DirectedGraph.py
 ### 0 BayesianModel.active_trail_nodes(self, variables, observed=None)
 **Input**
-**variables**: str or array-like, variables whose active trails are to be found.
+**variables**: str or array like, variables whose active trails are to be found.
 **observed**: List of nodes (optional). If given the active trails would be computed assuming these nodes to be observed.
 **Output**
 Returns a dictionary with the given variables as keys and all the nodes reachable from that respective variable as values.
 
 ### 1 BayesianModel.local_independencies(self, variables)
 **Input**
-**variables**: str or array-like variables whose local independencies are to be found.
+**variables**: str or array like variables whose local independencies are to be found.
 **Output**
 Returns an instance of Independencies containing the local independencies of each of the variables.
 
@@ -257,13 +257,13 @@ Returns an instance of Independencies containing the local independencies of eac
 **observed**: List of nodes (optional). If given the active trail would be computed assuming these nodes to be observed.
 **additional_observed**: List of nodes (optional). If given the active trail would be computed assuming these nodes to be observed along with the nodes marked as observed in the model.
 **Output**
-Returns True if there is any active trail between the start and the end node.
+Returns True if there is any active trail between start and end node
 
 ### 3 BayesianModel.get_independencies(self, latex=False)
 **Input**
 **latex**: boolean. If latex=True then latex string of the independence assertion would be created.
 **Output**
-Computes independencies in the Bayesian Network, by checking d-separation.
+Computes independencies in the Bayesian Network, by checking d-seperation.
 
 ### 4 BayesianModel.get_immoralities(self)
 **Output**
@@ -284,20 +284,21 @@ Computes independencies in the Bayesian Network, by checking d-separation.
 ### 7 DAG.__init__
 **input**
 **data**: input graph
-        Data to initialize graph. If data=None (default) an empty graph is created. The data can be an edge list or any Networkx graph object.
+        Data to initialize graph. If data=None (default) an empty graph is
+        created. The data can be an edge list or any Networkx graph object.
         data is not allowed to contain cycles.
         
 **Tests**
-    A new test was implemented to test the new functionality to check for cycles. `test_init_with_cycle` in the file `test_DAG.py`.
+    New test were implemented to test the new functionallity to check for cycles. `test_init_with_cycle` in the file `test_DAG.py`.
 ## Existing test cases relating to refactored code
 
 As for the existing test the following files had to be changed while refactoring:
 
-1. test_DirectedGraph (which is named test_DAG after). This consisted of changing the DirectedGraph occurrences to DAG, and the new cycle function was tested here with new tests.
-2. test_ConstrantBasedEstimator This consisted of changing the DirectedGraph occurrences to DAG. 
-3. test_BayesianModel This consisted of changing the DirectedGraph occurrences to DAG.
+1. test_DirectedGraph (which is named test_DAG after). This consisted of changing the DirectedGraph occurences to DAG, and the new cycle function was tested here with new tests.
+2. test_ConstrantBasedEstimator This consisted of changing the DirectedGraph occurences to DAG. 
+3. test_BayesianModel This consisted of changing the DirectedGraph occurences to DAG.
 
-Please look in these files for existing test cases. Basically, most of the test cases were handled by changing the occurrences of DirectedGraph to DAG apart from the new cycle function. 
+Please look in these files for existing test cases. Basically most of the test cases were handled by changing the occurences of DirectedGraph to DAG apart from the new cycle function. 
 
 To view the changes made to the tests as a diff, use the command:
 
@@ -321,9 +322,9 @@ For each team member, how much time was spent in
 Marcus Östling:
 *    5h searching for a project
 *    2h Geode (Project 1)
-*    6h identifying tests for GridCacheMapEntry (Project 2)
+*    6h idenifing tests for GridCacheMapEntry (Project 2)
 *    2h Document function requirements (pgmpy).
-*    5h Checking for cycles in DAG, I had some problems and that I needed to discuss with an author of pgmpy.
+*    5h Checking for cycles in DAG, had some problems and that I needed to discuss with an author of pgmpy.
 *    2h Moving two function from DirectedGraph to DAG.
 
 Andreas Gylling: 
@@ -352,7 +353,7 @@ Philippa Örnell:
 It took two whole days before finding a project we could proceed with and start refactoring with. 
 * 6-8 hours looking at Geode project, trying to understand the issue. 
 * 6 hours looking at Ignite project, trying to build and get the tests running. Getting the tests to work was most difficult with that project. Then another 2 trying to understand the refactoring issue.
-* Spent 2-3 hours on Thursday evening trying to find a new project with the requirement that the code base is smaller and the refactoring issue is clearer than the Apache project. Found pgmpy!
+* Spent 2-3 hours on thursday evening trying to find a new project with the requirement that the code base is smaller and the refactoring issue is clearer than the Apache project. Found pgmpy!
 * 3-4 hours structure report and do report writing
 * 1 h, Refactoring 1 function 
 
@@ -360,8 +361,65 @@ It took two whole days before finding a project we could proceed with and start 
 ## Overall experience
 Our third project was a lot easier to work with due to the clear issue description and great documentation, which we felt were lacking in the first two project we looked at. 
 
-**What are your main takeaways from this project? What did you learn?**
-The importance of good documentation cannot be stressed enough, and not only the documentation of the function but also documentation for developers for how to build and run tests. Finding good open source projects can be quite hard. We had way too little time for the bigger Apache projects. Another issue with the first Apache project was that we found an open and unassigned issue but after a while, we actually found a pull request for almost the entire refactoring.
+**What are your main take-aways from this project? What did you learn?**
+The importance of good documentation can not be stressed enough. Finding good open source projects can be quite hard. We had way too little time for the bigger Apache projects. Another issue with the first Apache project was that we found an open and unassigned issue but after a while we actually found a pull request for almost the entire refactoring.
 
 **Is there something special you want to mention here?**
-We had good contact with the creator of the issue on GitHub, which was nice when we needed clarification on some things. The creator was welcoming and supportive.
+We had a good contact with the creator of the issue on github, which was nice when we needed clarification on some things. The creator was welcoming and supportive.
+
+
+**Here is what we have to add for a P+, let's try to write some stuff in here! :) :**
+
+3. Patches are accepted by the project, or considered for acceptance. (This requires a link to an accepted commit, or a discussion item.)  LETS ASSUME WE HAVE A PASS ON THIS.
+
+
+**2. Relevant test cases (existing tests and updated/new tests related to the refactored code) are traced to requirements.**
+
+Test cases which are affected by the requirements mention above:
+
+#### 0 BayesianModel.active_trail_nodes(self, variables, observed=None)
+* `test_active_trail_nodes` in `test_BayesianModel.py`
+* `test_active_trail_nodes_args` in `test_BayesianModel.py`
+* `test_active_trail_nodes` in `test_NaiveBayes.py`
+* `test_active_trail_nodes_args` in `test_NaiveBayes.py`
+
+#### 1 BayesianModel.local_independencies(self, variables)
+* `test_local_independencies` in `test_BayesianModel.py`
+* `test_local_independencies` in `test_NaiveBayes.py`
+
+#### 2 BayesianModel.is_active_trail(self, start, end, observed=None)
+* `test_is_active_trail_triplets` in `test_BayesianModel.py`
+* `test_is_active_trail` in `test_BayesianModel.py`
+* `test_is_active_trail_args` in `test_BayesianModel.py`
+
+#### 3 BayesianModel.get_independencies(self, latex=False)
+* `test_get_independencies` in `test_BayesianModel.py`
+* `test_build_skeleton` in `test_ConstraintBasedEstimator.py`
+* `test_estimate_from_independencies` in `test_ConstraintBasedEstimator.py`
+
+#### 4 BayesianModel.get_immoralities(self)
+* `test_get_immoralities` in `test_BayesianModel.py`
+
+#### 5 BayesianModel.is_iequivalent(self, model)
+* `test_is_iequivalent` in `test_BayesianModel.py`
+
+#### 6 BayesianModel.get_markov_blanket(self, node)
+* `test_markov_blanet` in `test_BayesianModel.py`
+
+#### 7 DAG.__init__
+* `TestDAGCreation` class in `test_DAG.py`.
+* `test_pdag_to_dag` in `test_ConstraintBasedEstimator.py`
+
+**4. Updates in the source (either as refactorings or bug fixes) are put into context with the overall software architecture and discussed, relating them to design patterns and refactoring patterns.**
+
+The main issue this refactoring was trying to resolve was that the `DirectedGraph` was/is currently the base class for all the DAG-based models. It is better that this is renamed to DAG as this is more explicit and makes the code more general. Before refactoring many of the methods that should be in the DAG class were in the `BayesianModel` class. Since these methods can be applied to all DAG based models, it is not desirable that these are in the `BayesianModel` class. Some more functionally in the DAG class was implemented too. 
+
+This refactoring changes the overall architecture (as seen in UML) and makes the code more general. Since DAGs are a big concept in graph theory it makes sense that they have a class of their own. By doing the refactoring we allowed other DAG based models to also have access to these methods. 
+
+**6. You can argue critically about the benefits, drawbacks, and limitations of your work carried out, in the context of current software engineering practice.**
+
+There are several benefits to the refactoring that we performed on the project. One part of our refactoring was moving methods from a subclass to a superclass. This is sometimes refered to as pull-up refactoring. Pull-up refactoring can help to avoid code duplication, for example if several subclasses implement the same functionality, it should be moved to the superclass. Another benefit, which is more relevant in our case, is that the functionality can be applied to a wider range of objects. The methods that we moved to the DAG class represent functionality that makes sense when performed not only on BayesianModels but on DAGs of any kind. So moving them leads to a higher level of generalization and thereby enables them to be used in a wider range of contexts.
+
+A drawback of the work we carried out is that we are still representing partially directed graphs as DAGS. The author of the issue (and most of the project) suggested late in our process that we should create a new class for PDAGs. Because PDAGs are now represented as DAGs and don't have a class of their own, it is unneccesarily complicated to create functionality specific to PDAGs.
+
+It's worth mentioning that a Python IDE could've made the refactoring a lot easier. For some parts of the refactoring we had to resort to command-line tools like grep and sed, which was more painful and messy.
